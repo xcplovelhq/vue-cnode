@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 # vue-cnode
-=======
-# lol
->>>>>>> add
+
 
 > A Vue.js project
 

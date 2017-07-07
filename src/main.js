@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import MuseUi from 'muse-ui'
 import VueTimeago from 'vue-timeago'
+import store from './store'
 
 
 import 'muse-ui/dist/muse-ui.css'
@@ -21,11 +22,10 @@ Vue.use(VueTimeago, {
     'zh-CN': require('vue-timeago/locales/zh-CN.json')
   }
 })
-
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

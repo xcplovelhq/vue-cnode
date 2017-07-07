@@ -2,13 +2,12 @@
   <div id="app">
     <div class="g-header">
         <mu-appbar :title="title" titleClass="center">
-          <mu-icon-button icon="menu" slot="left" label="左边弹出" @click="open('left')"/>
+          <mu-icon-button icon="menu" slot="left" label="左边弹出"/>
           <mu-icon-button icon="expand_more" slot="right"/>
         </mu-appbar>
     </div>
-    <mu-popup position="left" popupClass="m-pop-left" :open="leftPopup" @close="close('left')"></mu-popup>
     <transition>
-        <router-view v-on:getTitle="getTitle"></router-view>
+        <router-view></router-view>
     </transition>
   </div>
 </template>
@@ -40,24 +39,8 @@ export default {
         }
     },
     methods: {
-        open (position) {
-            this[position + 'Popup'] = true
-        },
-        close (position) {
-            this[position + 'Popup'] = false
-        },
         getTitle (val) {
             this.bottomNav = val;
-        }
-    },
-    watch: {
-        leftPopup (val) {
-            console.log("qqqqqq")
-          if (val) {
-            // setTimeout(() => {
-            //   this.leftPopup = false
-            // }, 2000)
-            }
         }
     },
 }

@@ -1,8 +1,17 @@
 <template lang="html">
     <div class="">
+        <div class="g-loading" v-if="isLoading">
+            <div class="m-loading">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
         <List :list="list" v-on:scroll="scroll"></List>
         <mu-paper style="max-width: 376px; ">
-            <mu-bottom-nav :value="bottomNav" shift @change="handleChange($event)">
+            <mu-bottom-nav :value="params.bottomNav" shift @change="handleChange($event)">
                 <mu-bottom-nav-item value="all" title="全部" icon="menu"/>
                 <mu-bottom-nav-item value="good" title="精华" icon="thumb_up"/>
                 <mu-bottom-nav-item value="share" title="分享" icon="share"/>
@@ -20,12 +29,13 @@ export default {
     data: function () {
         return {
             list: [],
-            num: 1,
             scroller: null,
-            loading: false,
-            leftPopup: false,
-            bottomNav: 'all',
-            bottomNavColor: 'all'
+            isLoading: false,
+            params:{
+                num: 1,
+                bottomNav: 'all',
+                bottomNavColor: 'all'
+            }
         }
     },
     mounted (){
@@ -33,48 +43,28 @@ export default {
     },
     methods: {
         handleChange (val) {
-            this.$emit('getTitle',val)
-            this.bottomNav = val;
-            this.title = val;
-            axios.get("https://cnodejs.org/api/v1/topics",{
-                params:{
-                    page: this.num,
-                    limit: 20,
-                    mdrender: "false",
-                    tab: this.bottomNav,
-                }
-            }).then((r) => {
-                this.list = r.data.data
+            this.isLoading = true;
+            this.params.bottomNav = val;
+            this.params.title = val;
+            this.$store.dispatch("GetTopicsList",this.params).then((data) => {
+                this.list = data;
+                this.isLoading = false;
             })
         },
         scroll(){
-            this.loading = true;
-            this.num+= 1;
-            axios.get("https://cnodejs.org/api/v1/topics",{
-                params:{
-                    page: this.num,
-                    limit: 20,
-                    tab: this.bottomNav,
-                    mdrender: "false"
-                }
-            }).then((r) => {
-                console.log(r)
-                r.data.data.forEach((v,index) => {
-                    this.list.push(v)
-                })
-                this.loading = false;
+            this.isLoading = true;
+            this.params.num+= 1;
+            this.$store.dispatch("GetTopicsList",this.params).then((data) => {
+                this.list = data;
+                this.isLoading = false;
             })
         }
     },
     created: function() {
-        axios.get("https://cnodejs.org/api/v1/topics",{
-            params: {
-                page: 1,
-                limit: 20,
-                mdrender: "false"
-            }
-        }).then((r) => {
-            this.list = r.data.data;
+        this.isLoading = true;
+        this.$store.dispatch("GetTopicsList",this.params).then((data) => {
+            this.list = data;
+            this.isLoading = false;
         })
     },
     components:{

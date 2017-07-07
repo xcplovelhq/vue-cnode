@@ -1,6 +1,5 @@
 <template lang="html">
     <div class="m-list">
-        <transition name="fade" tag="p">
         <mu-list>
             <mu-list-item v-for="(v,index) in list" :key="v" tag="li">
                 <div class="m-title"><span :class="[v.top ? 'z-ding': '']">{{getType(v.tab)}}</span>{{v.title}}</div>
@@ -23,34 +22,6 @@
                 </div>
             </mu-list-item>
         </mu-list>
-        <!-- <ul>
-            <li v-for="(v,index) in list" :key="v">
-                <router-link :to="'/topic/' + v.id">
-                    <div class="m-title"><span :class="[v.top ? 'z-ding': '']">{{getType(v.tab)}}</span>{{v.title}}</div>
-                    <div class="m-box">
-                        <mu-flexbox>
-                            <mu-flexbox-item class="flex-demo m-left" grow="0">
-                                <div class="m-img">
-                                  <img :src="v.author.avatar_url" alt="">
-                                </div>
-                            </mu-flexbox-item>
-                            <mu-flexbox-item class="flex-demo m-txt" shrink="1">
-                                <h3>{{ v.author.loginname}}</h3>
-                                <p><timeago :since="v.create_at"></timeago></p>
-                            </mu-flexbox-item>
-                            <mu-flexbox-item class="flex-demo m-txt m-right" shrink="1">
-                                <h3><span>{{v.reply_count}} </span>/{{v.visit_count}}</h3>
-                                <p><timeago :since="v.last_reply_at"></timeago></p>
-                            </mu-flexbox-item>
-                        </mu-flexbox>
-                    </div>
-                </router-link>
-            </li>
-            <mu-infinite-scroll :scroller="scroller" :loading="loading" v-on:load="loadMore"/>
-        </ul> -->
-        </transition>
-
-
     </div>
 </template>
 
