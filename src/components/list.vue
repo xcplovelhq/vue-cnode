@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="m-list">
         <mu-list>
-            <mu-list-item v-for="(v,index) in list" :key="v" tag="li">
+            <mu-list-item v-for="(v,index) in list" :key="v" tag="a" :to="'/topic/' + v.id">
                 <div class="m-title"><span :class="[v.top ? 'z-ding': '']">{{getType(v.tab)}}</span>{{v.title}}</div>
                 <div class="m-box">
                     <mu-flexbox>
@@ -64,13 +64,11 @@ export default {
 <style lang="scss">
     .m-list{
         position: absolute;
-        top: 56px;
         left: 0;
-        bottom: 56px;
+        top: 0;
         width: 100%;
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-        background: #fff;
+        bottom: 56px;
+        overflow-y: auto;
         ul{
             margin: 0;
             padding-left: 0;

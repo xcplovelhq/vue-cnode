@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="">
+    <div class="g-list">
         <div class="g-loading" v-if="isLoading">
             <div class="m-loading">
                 <span></span>
@@ -74,76 +74,15 @@ export default {
 </script>
 
 <style lang="scss">
-    .m-list{
-        position: absolute;
-        top: 56px;
-        left: 0;
-        bottom: 56px;
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-        background: #fff;
-        ul{
-            margin: 0;
-            padding-left: 0;
-        }
-        li{
-            padding: 10px 13px;
-            border-bottom: 1px solid #d5dbdb;
-            .m-title{
-                width: 100%;
-                font-size: 16px;
-                color: #333;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                span{
-                    display: inline-block;
-                    margin-right: 10px;
-                    padding: 3px 5px;
-                    font-size: 12px;
-                    color: #999;
-                    border-radius: 6px;
-                    background: #e5e5e5;
-                    &.z-ding{
-                        color: #fff;
-                        background: #80bd01;
-                    }
-                }
-            }
-            .m-box{
-                display: flex;
-                margin-top: 10px;
-                .m-left{
-                    width: 40px;
-                }
-                .m-img{
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    background: #ccc;
-                    overflow: hidden;
-                    img{
-                      width: 40px;
-                      height: 40px;
-                    }
-                }
-                .m-txt{
-                    h3{
-                        font-size: 14px;
-                        color: #34495e;
-                        span{
-                            font-weight: bold;
-                            color: #80bd01;
-                        }
-                    }
-                    p{
-                        font-size: 14px;
-                        color: #34495e;
-                    }
-                }
-                .m-right{
-                    text-align: right;
-                }
+    .g-list{
+        bottom: 0px;
+        .mu-paper{
+            position: absolute;
+            left: 0;
+            bottom: 0px;
+            width: 100%;
+            .mu-bottom-nav{
+                background: #00aff0;
             }
         }
     }
