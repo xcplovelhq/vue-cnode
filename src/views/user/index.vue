@@ -15,11 +15,11 @@
         </div>
         <div v-if="activeTab === 'tab1'" class="m-recent">
             <UserItemList :topicList="user.recent_topics" :index="5"></UserItemList>
-            <router-link to="">查看更多&gt;&gt;</router-link>
+            <router-link :to="'/user/' + user.loginname + '/topic'" class="m-btn">查看更多&gt;&gt;</router-link>
         </div>
         <div v-if="activeTab === 'tab2'" class="m-recent">
             <UserItemList :topicList="user.recent_replies" :index="5"></UserItemList>
-            <router-link to="">查看更多&gt;&gt;</router-link>
+            <router-link :to="'/user/' + user.loginname + '/replies'" class="m-btn">查看更多&gt;&gt;</router-link>
         </div>
     </div>
 </template>
@@ -35,14 +35,23 @@ export default {
         }
     },
     created(){
-        this.$store.dispatch("GETUserInfo", {loginname : this.$route.params.loginname}).then((data) =>{
-            this.user = data
+
+    },
+    beforeRouteEnter (to, from, next){
+        next( vm => {
+            vm.getData();
         })
     },
     methods: {
         handleTabChange (val) {
             this.activeTab = val
         },
+        getData (){
+            this.$store.dispatch("GETUserInfo", {loginname : this.$route.params.loginname}).then((data) =>{
+                this.user = data
+            })
+            this.$store.commit("getTitle","个人信息")
+        }
     },
     components: {
         'UserItemList': UserItemList
@@ -52,7 +61,6 @@ export default {
 
 <style lang="scss">
 .g-user{
-    height: 100%;
     background: #fff;
     .m-title{
         padding: 50px 0 30px;
@@ -66,6 +74,18 @@ export default {
             color: #333;
             text-align: center;
         }
+        .m-img{
+            width: 80px;
+            margin: 0 auto;
+            border-radius: 50%;
+            text-align: center;
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+            img{
+                width: 100%;
+                vertical-align: top;
+            }
+        }
     }
     .m-tab{
         .mu-tabs{
@@ -78,21 +98,8 @@ export default {
             background: #00aff0;
         }
     }
-
-    .m-img{
-        width: 80px;
-        margin: 0 auto;
-        border-radius: 50%;
-        text-align: center;
-        overflow: hidden;
-        border: 1px solid #f0f0f0;
-        img{
-            width: 100%;
-            vertical-align: top;
-        }
-    }
     .m-recent{
-        a{
+        .m-btn{
             display: inline-block;
             padding: 5px 10px;
             font-size: 14px;

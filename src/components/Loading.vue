@@ -1,3 +1,24 @@
+<template lang="html">
+    <div class="g-loading">
+        <div class="m-loading">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</template>
+
+<script>
+
+export default {
+
+}
+
+</script>
+
+<style lang="css">
 .g-loading{
     position: absolute;
     left: 0;
@@ -44,3 +65,5 @@
 .m-loading span:nth-child(5){
     -webkit-animation-delay:0.8s;
 }
+
+</style>

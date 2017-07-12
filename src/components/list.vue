@@ -2,7 +2,7 @@
     <div class="m-list">
         <mu-list>
             <mu-list-item v-for="(v,index) in list" :key="v" tag="a" :to="'/topic/' + v.id">
-                <div class="m-title"><span :class="[v.top ? 'z-ding': '']">{{getType(v.tab)}}</span>{{v.title}}</div>
+                <div class="m-title"><TopTips :tab="v.tab" :good="v.good" :top="v.top"></TopTips>{{v.title}}</div>
                 <div class="m-box">
                     <mu-flexbox>
                         <mu-flexbox-item class="flex-demo m-left" grow="0">
@@ -22,23 +22,27 @@
                 </div>
             </mu-list-item>
         </mu-list>
+        <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore"/>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import TopTips from './TopTips.vue'
 export default {
     props: {
         list: {
             type: Array,
         },
+        loading:{
+            type: Boolean
+        }
     },
     data: function () {
         return {
             // data: [],
             num: 1,
             scroller:null,
-            loading:false
         }
     },
     mounted (){
@@ -48,15 +52,9 @@ export default {
         loadMore: function(){
             this.$emit('scroll')
         },
-        getType: function(tab){
-            if(tab == "share"){
-                return "分享"
-            }else if(tab == "ask"){
-                return "问答"
-            }else if(tab == "job"){
-                return "招聘"
-            }
-        },
+    },
+    components:{
+        'TopTips':TopTips,
     }
 }
 </script>
@@ -84,19 +82,6 @@ export default {
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                span{
-                    display: inline-block;
-                    margin-right: 10px;
-                    padding: 3px 5px;
-                    font-size: 12px;
-                    color: #999;
-                    border-radius: 6px;
-                    background: #e5e5e5;
-                    &.z-ding{
-                        color: #fff;
-                        background: #80bd01;
-                    }
-                }
             }
             .m-box{
                 display: flex;

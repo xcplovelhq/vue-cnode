@@ -7,7 +7,9 @@
         </mu-appbar>
     </div>
     <transition :name="transitionName">
-        <router-view class="child-view"></router-view>
+        <keep-alive>
+            <router-view class="child-view"></router-view>
+        </keep-alive>
     </transition>
   </div>
 </template>
@@ -25,17 +27,7 @@ export default {
     },
     computed: {
         title (){
-            if(this.bottomNav === "all"){
-                return "全部"
-            }else if(this.bottomNav === "good"){
-                return "精华"
-            }else if(this.bottomNav === "share"){
-                return "分享"
-            }else if(this.bottomNav === "ask"){
-                return "问答"
-            }else if(this.bottomNav === "job"){
-                return "招聘"
-            }
+            return this.$store.getters.getTitle
         }
     },
     methods: {
@@ -48,7 +40,6 @@ export default {
     },
     watch:{
         '$route' (to, from) {
-            console.log("dsads");
             const toDepth = to.path.split('/').length
             const fromDepth = from.path.split('/').length
             this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
@@ -75,6 +66,7 @@ export default {
         position: absolute;
         left: 0;
         top: 56px;
+        bottom: 0px;
         width: 100%;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;

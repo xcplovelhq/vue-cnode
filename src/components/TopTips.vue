@@ -1,10 +1,10 @@
 <template lang="html">
-    <span class="m-topTip" :class="getTypeClass">{{ getType }}</span>
+    <span :class="getTypeClass">{{ getType }}</span>
 </template>
 
 <script>
 export default {
-    props: ['tab','good','top'],
+    props: ['tab','good','top','type'],
     data(){
         return {
 
@@ -12,7 +12,7 @@ export default {
     },
     computed: {
         getType(){
-            if(this.top){
+            if(this.top && !this.type){
                 return "置顶"
             }else if(this.tab === "all"){
                 return "全部"
@@ -25,10 +25,15 @@ export default {
             }else if(this.tab === "job"){
                 return "招聘"
             }
+
         },
         getTypeClass(){
-            if(this.top || this.good){
-                return "z-good"
+            if(this.type == "showTxt"){
+                return ""
+            }else if(this.top || this.good){
+                return "m-topTip z-good"
+            }else{
+                return "m-topTip"
             }
         }
     }

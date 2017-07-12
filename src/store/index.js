@@ -7,20 +7,17 @@ const API = "https://cnodejs.org/api/v1"
 
 const store = new Vuex.Store({
     state: {
-        title: "全部",
+        title: "all",
         topicsList: [],
         details:{},
         userInfo:{}
     },
     mutations: {
-        getTitle (){
-
+        getTitle (state,data){
+            state.title = data
         },
         getTopicsList (state, data){
-            data.forEach((v) => {
-                state.topicsList.push(v)
-            })
-            // state.topicsList = data
+            state.topicsList = data
         },
         getDetails(state, data){
             state.details = data;
@@ -35,10 +32,12 @@ const store = new Vuex.Store({
             try {
                 data = await axios.get( API + "/topics",
                     {
-                        page: params.num,
-                        limit: 20,
-                        tab: params.bottomNav,
-                        mdrender: "false",
+                        params:{
+                            page: params.num,
+                            limit: 20,
+                            tab: params.bottomNav,
+                            mdrender: "false",
+                        }
                     }
                 )
             } catch (err) {
@@ -79,7 +78,21 @@ const store = new Vuex.Store({
         }
     },
     getters: {
-
+        getTitle: state => {
+            if(state.title === "all"){
+                return "全部"
+            }else if(state.title === "good"){
+                return "精华"
+            }else if(state.title === "share"){
+                return "分享"
+            }else if(state.title === "ask"){
+                return "问答"
+            }else if(state.title === "job"){
+                return "招聘"
+            }else{
+                return state.title
+            }
+        },
     }
 })
 export default store

@@ -1,15 +1,7 @@
 <template lang="html">
     <div class="g-list">
-        <div class="g-loading" v-if="isLoading">
-            <div class="m-loading">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-        <List :list="list" v-on:scroll="scroll"></List>
+        <Loading v-if="isLoading"></Loading>
+        <List :list="list" v-on:scroll="scroll" :loading="loading"></List>
         <mu-paper style="max-width: 376px; ">
             <mu-bottom-nav :value="params.bottomNav" shift @change="handleChange($event)">
                 <mu-bottom-nav-item value="all" title="全部" icon="menu"/>
@@ -24,22 +16,30 @@
 
 <script>
 import axios from 'axios'
-import List from '../../components/list.vue'
+import List from '../../components/List.vue'
+import Loading from '../../components/Loading.vue'
 export default {
     data: function () {
         return {
             list: [],
             scroller: null,
             isLoading: false,
+            loading: false,
+            bottomNavColor: 'all',
             params:{
                 num: 1,
                 bottomNav: 'all',
-                bottomNavColor: 'all'
             }
         }
     },
     mounted (){
         this.scroller = this.$el
+    },
+    beforeRouteEnter (to, from, next){
+        let self = this;
+        next( vm => {
+            vm.$store.commit("getTitle",vm.params.bottomNav)
+        })
     },
     methods: {
         handleChange (val) {
@@ -50,13 +50,16 @@ export default {
                 this.list = data;
                 this.isLoading = false;
             })
+            this.$store.commit("getTitle",val)
         },
         scroll(){
-            this.isLoading = true;
             this.params.num+= 1;
+            this.loading = true;
             this.$store.dispatch("GetTopicsList",this.params).then((data) => {
-                this.list = data;
-                this.isLoading = false;
+                data.forEach((v) =>{
+                    this.list.push(v);
+                })
+                this.loading = false;
             })
         }
     },
@@ -67,14 +70,18 @@ export default {
             this.isLoading = false;
         })
     },
+
+
     components:{
         List:List,
+        Loading:Loading
     }
 }
 </script>
 
 <style lang="scss">
     .g-list{
+        height: auto;
         bottom: 0px;
         .mu-paper{
             position: absolute;

@@ -1,10 +1,12 @@
 <template lang="html">
     <ul class="g-problem">
-        <li v-for="(list,index) in topicList" v-if="index < isIndex">
-            <div class="m-img"><img :src="list.author.avatar_url" alt=""></div>
-            <div class="m-name">{{ list.author.loginname }}</div>
-            <div class="m-title">{{ list.title }}</div>
-            <div class="m-time"><timeago :since="list.last_reply_at"></timeago></div>
+        <li v-for="(list,index) in topicList" :key="index" v-if="index < isIndex">
+            <router-link :to="'/topic/' + list.id">
+                <div class="m-img"><img :src="list.author.avatar_url" alt=""></div>
+                <div class="m-name">{{ list.author.loginname }}</div>
+                <div class="m-title">{{ list.title }}</div>
+                <div class="m-time"><timeago :since="list.last_reply_at"></timeago></div>
+            </router-link>
         </li>
     </ul>
 </template>
@@ -24,6 +26,8 @@ export default {
         isIndex(){
             if(this.index){
                 return "5"
+            }else{
+                return this.topicList.length
             }
         }
     }
@@ -34,11 +38,13 @@ export default {
 <style lang="scss">
 .g-problem{
     li{
-        display: flex;
-        padding: 10px;
-        font-size: 14px;
-        color: #333;
-        border-bottom: 1px solid #f0f0f0;
+        a{
+            display: flex;
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px solid #f0f0f0;
+        }
         .m-img{
             width: 30px;
             height: 30px;
