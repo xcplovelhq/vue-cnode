@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="g-details">
-        <Loading v-if="isLoading"></Loading>
-        <div class="m-title">
+        <Loading v-if="isLoading" class="g-loading"></Loading>
+        <div class="g-title">
             <TopTips :tab="detail.tab" :good="detail.good" :top="detail.top"></TopTips>{{ detail.title }}
         </div>
         <div class="m-tips">
@@ -34,7 +34,7 @@ export default {
         }
     },
     created(){
-        // this.getData();
+
     },
     beforeRouteEnter (to, from, next){
         next( vm => {
@@ -63,12 +63,16 @@ export default {
 <style lang="scss">
 .g-details{
     background: #fff;
-    .m-title{
+    .g-loading{
+        height: 100%;
+    }
+    .g-title{
         padding: 10px;
         font-size: 20px;
     }
     .m-tips{
-        padding: 0 10px;
+        padding: 0 10px 10px;
+        border-bottom: 1px solid #f0f0f0;
     }
     .m-content{
         padding: 10px;
@@ -80,8 +84,14 @@ export default {
             h1{
                 font-size: 32.5px;
             }
+            h2{
+                font-size: 26px;
+            }
             h3{
                 font-size: 24.5px;
+            }
+            h4{
+                font-size: 17.5px;
             }
             p{
                 white-space: pre-wrap;
@@ -109,6 +119,41 @@ export default {
             }
             img{
                 width: 100%;
+            }
+            table{
+                padding: 0;
+                border-collapse: collapse;
+                border-spacing: 0;
+                font: inherit;
+                tr{
+                    border-top: 1px solid #ccc;
+                    background-color: #fff;
+                    margin: 0;
+                    padding: 0;
+                    th{
+                        border: 1px solid #ccc;
+                        text-align: left;
+                        margin: 0;
+                        padding: 6px 13px;
+                    }
+                    td{
+                        border: 1px solid #ccc;
+                        text-align: left;
+                        margin: 0;
+                        padding: 6px 13px;
+                    }
+                }
+            }
+            .prettyprint{
+                    font-size: 14px;
+                    border-radius: 0;
+                    padding: 0 15px;
+                    border: none;
+                    margin: 20px 0;
+                    border-width: 1px 0;
+                    background: #f7f7f7;
+                    -moz-tab-size: 4;
+                    tab-size: 4;
             }
         }
     }

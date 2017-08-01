@@ -2,8 +2,14 @@
   <div id="app">
     <div class="g-header">
         <mu-appbar :title="title" titleClass="center">
-          <mu-icon-button icon="navigate_before" slot="left" @click="historyBack" />
-          <mu-icon-button icon="expand_more" slot="right"/>
+            <mu-icon-button icon="navigate_before" slot="left" @click="historyBack" />
+            <mu-icon-menu icon="expand_more" slot="right" :anchorOrigin="leftBottom">
+                <mu-menu-item title="菜单 1"/>
+                <mu-menu-item title="菜单 2"/>
+                <mu-menu-item title="菜单 3"/>
+                <mu-menu-item title="菜单 4"/>
+                <mu-menu-item title="菜单 5"/>
+            </mu-icon-menu>
         </mu-appbar>
     </div>
     <transition :name="transitionName">
@@ -17,12 +23,14 @@
 <script>
 import axios from 'axios'
 
+
 export default {
     name: 'app',
     data: function(){
         return {
             bottomNav: 'all',
-            transitionName: 'slide-left'
+            transitionName: 'slide-left',
+            leftBottom:{"vertical":"bottom","horizontal":"left"}
         }
     },
     computed: {

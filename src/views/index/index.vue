@@ -1,8 +1,8 @@
 <template lang="html">
     <div class="g-list">
         <Loading v-if="isLoading"></Loading>
-        <List :list="list" v-on:scroll="scroll" :loading="loading"></List>
-        <mu-paper style="max-width: 376px; ">
+        <List :list="list" v-on:scroll="scroll" :loading="loading" v-on:getScroll="getScroll" :scrollTop="scrollTop"></List>
+        <mu-paper>
             <mu-bottom-nav :value="params.bottomNav" shift @change="handleChange($event)">
                 <mu-bottom-nav-item value="all" title="全部" icon="menu"/>
                 <mu-bottom-nav-item value="good" title="精华" icon="thumb_up"/>
@@ -26,6 +26,7 @@ export default {
             isLoading: false,
             loading: false,
             bottomNavColor: 'all',
+            scrollTop: 0,
             params:{
                 num: 1,
                 bottomNav: 'all',
@@ -38,6 +39,8 @@ export default {
     beforeRouteEnter (to, from, next){
         let self = this;
         next( vm => {
+            console.log("Dsads");
+            vm.scrollTop = vm.$store.state.scrollTop+1
             vm.$store.commit("getTitle",vm.params.bottomNav)
         })
     },
@@ -51,6 +54,7 @@ export default {
                 this.isLoading = false;
             })
             this.$store.commit("getTitle",val)
+            this.getScroll(0)
         },
         scroll(){
             this.params.num+= 1;
@@ -61,7 +65,11 @@ export default {
                 })
                 this.loading = false;
             })
-        }
+        },
+        getScroll(e){
+            this.$store.commit("getScroll",e)
+            this.scrollTop = e
+        },
     },
     created: function() {
         this.isLoading = true;

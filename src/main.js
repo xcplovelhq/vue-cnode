@@ -9,7 +9,7 @@ import store from './store'
 
 
 import 'muse-ui/dist/muse-ui.css'
-import '../static/css/reset.css'
+import './assets/css/reset.css'
 
 Vue.use(MuseUi)
 Vue.config.productionTip = false

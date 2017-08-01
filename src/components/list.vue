@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="m-list">
+    <div class="m-list" v-on:scroll="getScroll" ref="setScrollTop">
         <mu-list>
             <mu-list-item v-for="(v,index) in list" :key="v" tag="a" :to="'/topic/' + v.id">
                 <div class="m-title"><TopTips :tab="v.tab" :good="v.good" :top="v.top"></TopTips>{{v.title}}</div>
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import TopTips from './TopTips.vue'
 export default {
     props: {
@@ -36,6 +35,9 @@ export default {
         },
         loading:{
             type: Boolean
+        },
+        scrollTop:{
+            type: Number
         }
     },
     data: function () {
@@ -48,9 +50,15 @@ export default {
     mounted (){
         this.scroller = this.$el
     },
+    beforeUpdate(){
+        this.$refs.setScrollTop.scrollTop = this.scrollTop
+    },
     methods:{
         loadMore: function(){
             this.$emit('scroll')
+        },
+        getScroll (e){
+            this.$emit('getScroll',e.target.scrollTop)
         },
     },
     components:{
@@ -67,6 +75,7 @@ export default {
         width: 100%;
         bottom: 56px;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         ul{
             margin: 0;
             padding-left: 0;

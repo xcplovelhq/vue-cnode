@@ -26,25 +26,28 @@ export default {
 <style lang="scss">
 .g-replyList{
     li{
+        padding: 10px;
         border-bottom: 1px solid #f0f0f0;
-    }
-    .m-title{
-        .m-img{
-            img{
-                width: 30px;
+        .m-title{
+            .m-img{
+                img{
+                    width: 30px;
+                }
+            }
+            .m-name{
+                font-size:12px;
+                color: #333;
+            }
+            .m-time{
+                font-size: 12px;
+                color: #00aff0;
             }
         }
-        .m-name{
-            font-size:12px;
+        .m-content{
+            padding: 10px 0px 0;
+            font-size: 14px;
             color: #333;
         }
-        .m-time{
-            font-size: 12px;
-            color: #00aff0;
-        }
-    }
-    .m-content{
-
     }
 }
 </style>

@@ -8,6 +8,7 @@ const API = "https://cnodejs.org/api/v1"
 const store = new Vuex.Store({
     state: {
         title: "all",
+        scrollTop: 0,
         topicsList: [],
         details:{},
         userInfo:{}
@@ -15,6 +16,9 @@ const store = new Vuex.Store({
     mutations: {
         getTitle (state,data){
             state.title = data
+        },
+        getScroll (state,data){
+            state.scrollTop = data
         },
         getTopicsList (state, data){
             state.topicsList = data
@@ -74,6 +78,20 @@ const store = new Vuex.Store({
             if(data.data.success){
                 context.commit("getUserInfo", data.data.data)
                 return data.data.data
+            }
+        },
+        async accessToken(context, params){
+            let data = {}
+            try {
+                data = await axios.post( API + "/accesstoken", {
+                    accesstoken: params.token
+                })
+            } catch (err) {
+                return "错误的accessToken"
+            }
+            if(data.data.success){
+                console.log(data)
+                return data.data
             }
         }
     },

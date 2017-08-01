@@ -4,10 +4,11 @@ import Index from '@/views/index'
 import details from '@/views/details'
 import user from '@/views/user'
 import recentList from '@/views/recent'
+import login from '@/views/login'
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
+    // mode: "history",
     routes: [
         {
             path: '/',
@@ -33,15 +34,11 @@ export default new Router({
             path: '/user/:loginname/replies',
             name: 'repliesList',
             component: recentList
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: login
         }
     ],
-    scrollBehavior (to, from, savedPosition) {
-        if (savedPosition) {
-            console.log("a")
-           return savedPosition
-        } else {
-            console.log("ab")
-           return { x: 0, y: 200+"px" }
-        }
-    }
 })
