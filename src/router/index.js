@@ -5,6 +5,7 @@ import details from '@/views/details'
 import user from '@/views/user'
 import recentList from '@/views/recent'
 import login from '@/views/login'
+import newTopics from '@/views/newTopics'
 Vue.use(Router)
 
 export default new Router({
@@ -39,6 +40,11 @@ export default new Router({
             path: '/login',
             name: 'login',
             component: login
+        },
+        {
+            path: '/newTopics',
+            name: 'newTopics',
+            component: newTopics
         }
     ],
 })

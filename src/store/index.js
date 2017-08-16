@@ -15,7 +15,7 @@ const store = new Vuex.Store({
     },
     mutations: {
         getTitle (state,data){
-            state.title = data
+            state.title = data;
         },
         getScroll (state,data){
             state.scrollTop = data
@@ -87,13 +87,30 @@ const store = new Vuex.Store({
                     accesstoken: params.token
                 })
             } catch (err) {
-                return "错误的accessToken"
+                console.log("错误的accessToken")
             }
             if(data.data.success){
                 console.log(data)
                 return data.data
             }
-        }
+        },
+        async newTopics(context, params){
+            console.log(params)
+            let data = {}
+            try {
+                data = await axios.post( API + "/topics" , {
+                    accesstoken: params.token,
+                    title: params.title,
+                    tab: "dev",
+                    content: params.content
+                })
+            } catch (err) {
+                console.log("newTopics is ERROR" + err)
+            }
+            if(data.data.success){
+                return data.data
+            }
+        },
     },
     getters: {
         getTitle: state => {

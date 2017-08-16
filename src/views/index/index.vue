@@ -34,13 +34,13 @@ export default {
         }
     },
     mounted (){
-        this.scroller = this.$el
+        this.scroller = this.$el;
+
     },
     beforeRouteEnter (to, from, next){
         let self = this;
         next( vm => {
-            console.log("Dsads");
-            vm.scrollTop = vm.$store.state.scrollTop+1
+            vm.scrollTop = vm.$store.state.scrollTop+1;
             vm.$store.commit("getTitle",vm.params.bottomNav)
         })
     },

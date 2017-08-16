@@ -2,7 +2,7 @@
     <div class="g-login">
         <mu-text-field label="Access Token" labelFloat fullWidth v-model="value"/>
         <mu-raised-button label="登录" fullWidth @click="getToken"/>
-        <mu-popup  :overlay="false" popupClass="popup-err" :open="topPopup">
+        <mu-popup :overlay="false" popupClass="popup-err" :open="topPopup">
             {{ popText }}
         </mu-popup>
     </div>
@@ -28,11 +28,20 @@ export default {
             }else{
                 this.$store.dispatch("accessToken",{token:this.value}).then((r) => {
                     if(r.success){
-                        console.log(r)
-                    }else{
-                        this.popText = r
+                        this.popText = "验证成功"
+                        this.topPopup = true;
+                        setTimeout( () => {
+                            this.topPopup = false
+                        },2000)
+                        window.localStorage.token = this.value
+                        this.$router.push("/newTopics")
                     }
-                    console.log(r);
+                }).catch((err) =>{
+                    this.popText = "错误的accessToken"
+                    this.topPopup = true;
+                    setTimeout( () => {
+                        this.topPopup = false
+                    },2000)
                 });
             }
         }
